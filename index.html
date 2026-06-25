@@ -179,15 +179,18 @@
             .stork-wing-left,
             .stork-wing-right {
                 transform-box: view-box;
-                transform-origin: 150px 188px;
-                animation: wingFlap 0.55s ease-in-out 1.3s 3 alternate;
+                transform-origin: 178px 188px;
+                animation: wingFlap 0.6s ease-in-out 1.3s 3 alternate;
+            }
+            .stork-wing-right {
+                animation-delay: 1.4s;
             }
             @keyframes wingFlap {
                 0% {
                     transform: rotate(0deg);
                 }
                 100% {
-                    transform: rotate(-9deg);
+                    transform: rotate(-8deg);
                 }
             }
 
@@ -346,156 +349,72 @@
                     aria-label="Niedlicher Storch mit Baby"
                 >
                     <defs>
-                        <linearGradient
-                            id="wingFrontGrad"
-                            x1="0.25"
-                            y1="0"
-                            x2="0.7"
-                            y2="1"
-                        >
-                            <stop offset="0" stop-color="#b3ccee" />
-                            <stop offset="0.5" stop-color="#7ea3d3" />
-                            <stop offset="1" stop-color="#56789f" />
+                        <linearGradient id="wingFrontGrad" x1="0.2" y1="0" x2="0.85" y2="1">
+                            <stop offset="0" stop-color="#cfe0f6" />
+                            <stop offset="0.45" stop-color="#86abdb" />
+                            <stop offset="1" stop-color="#4f72a6" />
                         </linearGradient>
-                        <linearGradient
-                            id="wingBackGrad"
-                            x1="0.25"
-                            y1="0"
-                            x2="0.7"
-                            y2="1"
-                        >
-                            <stop offset="0" stop-color="#9bb8e0" />
-                            <stop offset="0.5" stop-color="#6c90c2" />
-                            <stop offset="1" stop-color="#496b99" />
+                        <linearGradient id="wingBackGrad" x1="0.2" y1="0" x2="0.85" y2="1">
+                            <stop offset="0" stop-color="#a6c1e6" />
+                            <stop offset="0.45" stop-color="#6c90c2" />
+                            <stop offset="1" stop-color="#3f6193" />
                         </linearGradient>
-                        <linearGradient
-                            id="bodyGrad"
-                            x1="0.2"
-                            y1="0"
-                            x2="0.65"
-                            y2="1"
-                        >
+                        <linearGradient id="bodyGrad" x1="0.2" y1="0" x2="0.65" y2="1">
                             <stop offset="0" stop-color="#ffffff" />
                             <stop offset="1" stop-color="#dbe5f2" />
                         </linearGradient>
-                        <linearGradient
-                            id="headGrad"
-                            x1="0.2"
-                            y1="0"
-                            x2="0.7"
-                            y2="1"
-                        >
+                        <linearGradient id="headGrad" x1="0.2" y1="0" x2="0.7" y2="1">
                             <stop offset="0" stop-color="#ffffff" />
                             <stop offset="1" stop-color="#e6edf7" />
                         </linearGradient>
-                        <linearGradient
-                            id="beakGrad"
-                            x1="0"
-                            y1="0"
-                            x2="0.4"
-                            y2="1"
-                        >
+                        <linearGradient id="beakGrad" x1="0" y1="0" x2="0.4" y2="1">
                             <stop offset="0" stop-color="#ffc169" />
                             <stop offset="0.55" stop-color="#f2842c" />
                             <stop offset="1" stop-color="#db661d" />
                         </linearGradient>
-                        <linearGradient
-                            id="beakLowerGrad"
-                            x1="0"
-                            y1="0"
-                            x2="0.4"
-                            y2="1"
-                        >
+                        <linearGradient id="beakLowerGrad" x1="0" y1="0" x2="0.4" y2="1">
                             <stop offset="0" stop-color="#e06a1f" />
                             <stop offset="1" stop-color="#c2531a" />
                         </linearGradient>
-                        <radialGradient
-                            id="cheekGrad"
-                            cx="0.5"
-                            cy="0.5"
-                            r="0.5"
-                        >
-                            <stop
-                                offset="0"
-                                stop-color="#f7a3bf"
-                                stop-opacity="0.85"
-                            />
-                            <stop
-                                offset="1"
-                                stop-color="#f7a3bf"
-                                stop-opacity="0"
-                            />
+                        <radialGradient id="irisGrad" cx="0.42" cy="0.38" r="0.62">
+                            <stop offset="0" stop-color="#74a3da" />
+                            <stop offset="0.6" stop-color="#3c69aa" />
+                            <stop offset="1" stop-color="#274a80" />
                         </radialGradient>
-                        <linearGradient
-                            id="babyHairGrad"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
+                        <radialGradient id="cheekGrad" cx="0.5" cy="0.5" r="0.5">
+                            <stop offset="0" stop-color="#f78fb0" stop-opacity="0.9" />
+                            <stop offset="1" stop-color="#f78fb0" stop-opacity="0" />
+                        </radialGradient>
+                        <linearGradient id="babyHairGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0" stop-color="#f6da7c" />
                             <stop offset="1" stop-color="#e7bd4c" />
                         </linearGradient>
-                        <radialGradient
-                            id="babyCheek"
-                            cx="0.5"
-                            cy="0.5"
-                            r="0.5"
-                        >
-                            <stop
-                                offset="0"
-                                stop-color="#f59a8a"
-                                stop-opacity="0.8"
-                            />
-                            <stop
-                                offset="1"
-                                stop-color="#f59a8a"
-                                stop-opacity="0"
-                            />
+                        <radialGradient id="babyCheek" cx="0.5" cy="0.5" r="0.5">
+                            <stop offset="0" stop-color="#f59a8a" stop-opacity="0.8" />
+                            <stop offset="1" stop-color="#f59a8a" stop-opacity="0" />
                         </radialGradient>
+                        <!-- one long feather, base at (0,0), tip pointing up -->
+                        <path
+                            id="feather"
+                            d="M0,0 C-7,-9 -8,-42 -3,-70 C-1.5,-80 1.5,-80 3,-70
+                               C8,-42 7,-9 0,0 Z"
+                        />
                     </defs>
 
-                    <!-- ── BACK WING (far) ───────────────────────────── -->
+                    <!-- ── FAR WING (behind body, raised back feathers) ─ -->
                     <g class="stork-wing-right">
-                        <path
-                            d="M158,182 C150,136 178,90 218,77 C244,69 258,88 252,116
-                               C248,138 228,152 208,160 C209,153 201,150 197,158
-                               C193,166 185,156 180,164 C175,171 168,162 162,170
-                               C159,175 158,179 158,182 Z"
-                            fill="url(#wingBackGrad)"
-                        />
-                        <path
-                            d="M172,168 C190,148 208,128 232,108"
-                            stroke="#d2e2f5"
-                            stroke-width="1.8"
-                            fill="none"
-                            stroke-linecap="round"
-                            opacity="0.45"
-                        />
-                        <path
-                            d="M184,170 C200,154 216,136 236,120"
-                            stroke="#d2e2f5"
-                            stroke-width="1.8"
-                            fill="none"
-                            stroke-linecap="round"
-                            opacity="0.4"
-                        />
+                        <use href="#feather" transform="translate(170,186) rotate(-16) scale(1,1.06)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="1" />
+                        <use href="#feather" transform="translate(170,186) rotate(0) scale(1,1.15)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="1" />
+                        <use href="#feather" transform="translate(170,186) rotate(16) scale(1,1.16)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="1" />
+                        <use href="#feather" transform="translate(170,186) rotate(31) scale(1,1.08)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="1" />
                     </g>
 
-                    <!-- ── TAIL ──────────────────────────────────────── -->
-                    <path
-                        d="M176,228 C204,232 230,240 248,250 C232,256 210,257 190,250
-                           C182,247 177,238 176,228 Z"
-                        fill="url(#wingBackGrad)"
-                    />
-                    <path
-                        d="M188,236 C208,240 226,246 242,252"
-                        stroke="#d2e2f5"
-                        stroke-width="1.4"
-                        fill="none"
-                        stroke-linecap="round"
-                        opacity="0.4"
-                    />
+                    <!-- ── TAIL FEATHERS ──────────────────────────────── -->
+                    <g>
+                        <use href="#feather" transform="translate(188,236) rotate(124) scale(1,0.64)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="0.9" />
+                        <use href="#feather" transform="translate(188,236) rotate(138) scale(1,0.68)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="0.9" />
+                        <use href="#feather" transform="translate(188,236) rotate(152) scale(1,0.62)" fill="url(#wingBackGrad)" stroke="#86a8d6" stroke-width="0.9" />
+                    </g>
 
                     <!-- ── LEGS ───────────────────────────────────────── -->
                     <g
@@ -504,8 +423,8 @@
                         stroke-linecap="round"
                         fill="none"
                     >
-                        <path d="M150,250 C152,278 168,302 186,322" />
-                        <path d="M164,250 C168,280 186,305 204,326" />
+                        <path d="M150,252 C152,280 168,304 186,324" />
+                        <path d="M164,252 C168,282 186,307 204,328" />
                     </g>
                     <g
                         stroke="var(--stork-leg)"
@@ -513,45 +432,43 @@
                         stroke-linecap="round"
                         fill="none"
                     >
-                        <path d="M186,322 l15,1 M186,322 l12,9 M186,322 l3,13" />
-                        <path d="M204,326 l15,1 M204,326 l12,9 M204,326 l3,13" />
+                        <path d="M186,324 l15,1 M186,324 l12,9 M186,324 l3,13" />
+                        <path d="M204,328 l15,1 M204,328 l12,9 M204,328 l3,13" />
                     </g>
 
-                    <!-- ── BODY ───────────────────────────────────────── -->
-                    <ellipse cx="153" cy="206" rx="50" ry="60" fill="url(#bodyGrad)" />
-                    <ellipse
-                        cx="137"
-                        cy="214"
-                        rx="25"
-                        ry="37"
-                        fill="#ffffff"
-                        opacity="0.5"
+                    <!-- ── BODY (slimmer egg) ─────────────────────────── -->
+                    <path
+                        d="M141,158 C126,176 124,210 135,242 C143,264 157,276 173,272
+                           C193,266 198,234 193,205 C188,181 175,165 158,161
+                           C152,159 146,158 141,158 Z"
+                        fill="url(#bodyGrad)"
                     />
+                    <ellipse cx="143" cy="214" rx="15" ry="29" fill="#ffffff" opacity="0.5" />
 
                     <!-- ── NECK ───────────────────────────────────────── -->
                     <path
-                        d="M150,176 C138,150 118,142 106,132"
+                        d="M147,164 C137,146 119,140 107,133"
                         stroke="#f4f8fd"
-                        stroke-width="25"
+                        stroke-width="22"
                         fill="none"
                         stroke-linecap="round"
                     />
                     <path
-                        d="M151,183 C141,161 125,151 113,141"
+                        d="M148,170 C139,152 124,144 113,138"
                         stroke="#d9e3f0"
-                        stroke-width="8"
+                        stroke-width="7"
                         fill="none"
                         stroke-linecap="round"
-                        opacity="0.6"
+                        opacity="0.55"
                     />
 
                     <!-- ── HEAD ───────────────────────────────────────── -->
-                    <circle cx="100" cy="118" r="28" fill="url(#headGrad)" />
+                    <circle cx="100" cy="116" r="29" fill="url(#headGrad)" />
 
-                    <!-- ── CREST (little head feathers, on top) ──────── -->
+                    <!-- ── CREST (little head feathers) ──────────────── -->
                     <path
-                        d="M95,93 C96,82 104,83 103,93 C108,80 116,83 112,95
-                           C120,87 125,94 119,102"
+                        d="M95,90 C96,79 104,80 103,90 C108,77 116,80 112,92
+                           C120,84 125,91 119,99"
                         stroke="#c4d3e8"
                         stroke-width="3.4"
                         fill="none"
@@ -559,64 +476,79 @@
                     />
 
                     <!-- ── BEAK ───────────────────────────────────────── -->
+                    <!-- mouth interior, so the slightly open beak is not see-through -->
                     <path
-                        d="M80,110 C62,116 40,134 28,148 C30,151 34,152 38,150
-                           C54,142 70,130 82,123 C84,117 83,111 80,110 Z"
+                        d="M40,149 C56,143 72,132 83,123 C85,128 85,134 83,139
+                           C72,144 56,150 42,153 C39,152 38,150 40,149 Z"
+                        fill="#9a4a17"
+                    />
+                    <path
+                        d="M80,108 C62,114 40,132 28,146 C30,149 34,150 38,148
+                           C54,140 70,128 82,121 C84,115 83,109 80,108 Z"
                         fill="url(#beakGrad)"
                     />
                     <path
-                        d="M38,150 C52,146 68,136 80,129 C82,132 82,136 80,139
-                           C68,145 52,152 40,155 C36,154 35,151 38,150 Z"
+                        d="M38,148 C52,144 68,134 80,127 C82,130 82,134 80,137
+                           C68,143 52,150 40,153 C36,152 35,149 38,148 Z"
                         fill="url(#beakLowerGrad)"
                     />
 
-                    <!-- ── EYE + CHEEK ───────────────────────────────── -->
-                    <ellipse cx="78" cy="130" rx="9.5" ry="6.5" fill="url(#cheekGrad)" />
-                    <circle cx="88" cy="115" r="8.6" fill="#2b3a5f" />
-                    <circle cx="88" cy="115" r="5" fill="#3f74b6" />
-                    <circle cx="88" cy="115" r="2.4" fill="#11203c" />
-                    <circle cx="90.5" cy="112" r="2.5" fill="#ffffff" />
-                    <circle cx="85.5" cy="118.5" r="1.2" fill="#ffffff" opacity="0.85" />
+                    <!-- ── CHEEK + EYE (bright & joyful) ─────────────── -->
+                    <ellipse cx="76" cy="125" rx="9.5" ry="6.5" fill="url(#cheekGrad)" />
+                    <!-- happy mouth corner -->
                     <path
-                        d="M80,108 C84,105 92,105 96,109"
+                        d="M79,121 C83,120 88,120 92,122"
+                        stroke="#c98038"
+                        stroke-width="1.4"
+                        fill="none"
+                        stroke-linecap="round"
+                        opacity="0.55"
+                    />
+                    <!-- eye: looking lovingly toward the baby -->
+                    <circle cx="86" cy="113" r="9.3" fill="#2b3a5f" />
+                    <circle cx="85.5" cy="114" r="7.5" fill="url(#irisGrad)" />
+                    <circle cx="84" cy="115.5" r="3.4" fill="#13223e" />
+                    <circle cx="88" cy="109.5" r="3" fill="#ffffff" />
+                    <circle cx="81.6" cy="117" r="1.5" fill="#ffffff" opacity="0.85" />
+                    <!-- upper lid -->
+                    <path
+                        d="M75,107 C80,101.5 91,101.5 96,108"
                         stroke="#2b3a5f"
-                        stroke-width="1.9"
+                        stroke-width="2.3"
                         fill="none"
                         stroke-linecap="round"
                     />
+                    <!-- lashes -->
+                    <path
+                        d="M75.5,107 l-4,-1.5 M77.5,104.5 l-3.2,-2.6 M80.5,102.6 l-1.8,-3.2"
+                        stroke="#2b3a5f"
+                        stroke-width="1.7"
+                        fill="none"
+                        stroke-linecap="round"
+                    />
+                    <!-- raised, delighted brow -->
+                    <path
+                        d="M78,96 C84,92.5 92,93 97,97"
+                        stroke="#2b3a5f"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                        opacity="0.85"
+                    />
 
-                    <!-- ── FRONT WING (near) ─────────────────────────── -->
+                    <!-- ── NEAR WING (big layered feathers, in front) ── -->
                     <g class="stork-wing-left">
+                        <use href="#feather" transform="translate(182,190) rotate(34) scale(1,1.02)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <use href="#feather" transform="translate(182,190) rotate(48) scale(1,1.12)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <use href="#feather" transform="translate(182,190) rotate(62) scale(1,1.18)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <use href="#feather" transform="translate(182,190) rotate(76) scale(1,1.16)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <use href="#feather" transform="translate(182,190) rotate(90) scale(1,1.06)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <use href="#feather" transform="translate(182,190) rotate(103) scale(1,0.95)" fill="url(#wingFrontGrad)" stroke="#bcd3ef" stroke-width="1.1" />
+                        <!-- covert smooths the wing root into the back -->
                         <path
-                            d="M150,186 C144,138 168,102 208,90 C244,79 268,98 263,126
-                               C259,150 240,168 216,180 C217,172 208,168 203,177
-                               C198,186 189,175 183,184 C178,192 169,181 163,189
-                               C159,194 152,190 150,186 Z"
+                            d="M171,200 C178,176 199,166 220,171 C232,174 233,190 223,201
+                               C209,213 187,212 175,206 Z"
                             fill="url(#wingFrontGrad)"
-                        />
-                        <path
-                            d="M164,182 C184,160 204,138 232,114"
-                            stroke="#dceaf9"
-                            stroke-width="2"
-                            fill="none"
-                            stroke-linecap="round"
-                            opacity="0.5"
-                        />
-                        <path
-                            d="M178,184 C196,164 214,144 238,124"
-                            stroke="#dceaf9"
-                            stroke-width="2"
-                            fill="none"
-                            stroke-linecap="round"
-                            opacity="0.42"
-                        />
-                        <path
-                            d="M192,186 C208,168 224,150 246,134"
-                            stroke="#dceaf9"
-                            stroke-width="2"
-                            fill="none"
-                            stroke-linecap="round"
-                            opacity="0.36"
                         />
                     </g>
 
