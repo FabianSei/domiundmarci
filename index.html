@@ -25,11 +25,7 @@
                 /* accent colours set by JS */
                 --accent: #7ec8e3;
                 --accent2: #5ab4d6;
-                --stork-body: #ffffff;
-                --stork-wing: #e8e8e8;
-                --stork-beak: #e8742a;
-                --stork-leg: #e8742a;
-                --stork-eye: #1a1a2e;
+                --stork-leg: #ef8838;
             }
 
             *,
@@ -140,7 +136,7 @@
             /* ── STORK WRAPPER ──────────────────────────────────────── */
             .stork-wrap {
                 margin-top: 3rem;
-                width: clamp(220px, 60vw, 320px);
+                width: clamp(240px, 64vw, 340px);
                 animation: storkLand 1.4s cubic-bezier(0.22, 1, 0.36, 1)
                     forwards;
                 transform-origin: center bottom;
@@ -163,27 +159,11 @@
                 }
             }
 
-            /* Wing flap on load */
-            .stork-wing-left,
-            .stork-wing-right {
-                transform-origin: center right;
-                animation: wingFlap 0.5s ease-in-out 1.3s 3 alternate;
-            }
-            .stork-wing-right {
-                transform-origin: center left;
-            }
-            @keyframes wingFlap {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(-12deg);
-                }
-            }
-
             /* gentle hover bob after landing */
             .stork-wrap svg {
                 animation: bob 4s ease-in-out 2s infinite;
+                filter: drop-shadow(0 8px 11px rgba(0, 0, 0, 0.3));
+                overflow: visible;
             }
             @keyframes bob {
                 0%,
@@ -195,9 +175,41 @@
                 }
             }
 
+            /* Wing flap on load — pivots at the shoulder */
+            .stork-wing-left,
+            .stork-wing-right {
+                transform-box: view-box;
+                transform-origin: 150px 188px;
+                animation: wingFlap 0.55s ease-in-out 1.3s 3 alternate;
+            }
+            @keyframes wingFlap {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(-9deg);
+                }
+            }
+
             /* ── BUNDLE BAG ─────────────────────────────────────────── */
-            .bundle {
+            .bundle,
+            .bundle-ribbon {
                 transition: fill 0.8s ease;
+            }
+            /* the bundle sways gently from the beak */
+            .bundle-swing {
+                transform-box: view-box;
+                transform-origin: 33px 150px;
+                animation: bundleSwing 3.6s ease-in-out 2.2s infinite;
+            }
+            @keyframes bundleSwing {
+                0%,
+                100% {
+                    transform: rotate(-2.5deg);
+                }
+                50% {
+                    transform: rotate(2.5deg);
+                }
             }
 
             /* ── HEADLINE ───────────────────────────────────────────── */
@@ -331,154 +343,389 @@
                     id="stork-svg"
                     viewBox="0 0 300 380"
                     xmlns="http://www.w3.org/2000/svg"
-                    aria-label="Storch mit Baby"
+                    aria-label="Niedlicher Storch mit Baby"
                 >
-                    <!-- Bundle (cloth sack the stork carries) -->
-                    <ellipse
-                        class="bundle"
-                        id="bundle"
-                        cx="150"
-                        cy="310"
-                        rx="52"
-                        ry="42"
-                        fill="#7ec8e3"
-                    />
-                    <path
-                        class="bundle"
-                        id="bundle-top"
-                        d="M98,310 Q150,260 202,310"
-                        stroke="#5ab4d6"
-                        stroke-width="2"
-                        fill="none"
-                    />
-                    <!-- Knot on bundle -->
-                    <circle
-                        id="bundle-knot"
-                        cx="150"
-                        cy="268"
-                        r="7"
-                        fill="#5ab4d6"
-                    />
-                    <!-- Rope from beak to bundle -->
-                    <path
-                        id="rope"
-                        d="M178,155 Q185,210 150,263"
-                        stroke="#c8a06a"
-                        stroke-width="2.5"
-                        fill="none"
-                        stroke-linecap="round"
-                    />
+                    <defs>
+                        <linearGradient
+                            id="wingFrontGrad"
+                            x1="0.25"
+                            y1="0"
+                            x2="0.7"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#b3ccee" />
+                            <stop offset="0.5" stop-color="#7ea3d3" />
+                            <stop offset="1" stop-color="#56789f" />
+                        </linearGradient>
+                        <linearGradient
+                            id="wingBackGrad"
+                            x1="0.25"
+                            y1="0"
+                            x2="0.7"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#9bb8e0" />
+                            <stop offset="0.5" stop-color="#6c90c2" />
+                            <stop offset="1" stop-color="#496b99" />
+                        </linearGradient>
+                        <linearGradient
+                            id="bodyGrad"
+                            x1="0.2"
+                            y1="0"
+                            x2="0.65"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#ffffff" />
+                            <stop offset="1" stop-color="#dbe5f2" />
+                        </linearGradient>
+                        <linearGradient
+                            id="headGrad"
+                            x1="0.2"
+                            y1="0"
+                            x2="0.7"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#ffffff" />
+                            <stop offset="1" stop-color="#e6edf7" />
+                        </linearGradient>
+                        <linearGradient
+                            id="beakGrad"
+                            x1="0"
+                            y1="0"
+                            x2="0.4"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#ffc169" />
+                            <stop offset="0.55" stop-color="#f2842c" />
+                            <stop offset="1" stop-color="#db661d" />
+                        </linearGradient>
+                        <linearGradient
+                            id="beakLowerGrad"
+                            x1="0"
+                            y1="0"
+                            x2="0.4"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#e06a1f" />
+                            <stop offset="1" stop-color="#c2531a" />
+                        </linearGradient>
+                        <radialGradient
+                            id="cheekGrad"
+                            cx="0.5"
+                            cy="0.5"
+                            r="0.5"
+                        >
+                            <stop
+                                offset="0"
+                                stop-color="#f7a3bf"
+                                stop-opacity="0.85"
+                            />
+                            <stop
+                                offset="1"
+                                stop-color="#f7a3bf"
+                                stop-opacity="0"
+                            />
+                        </radialGradient>
+                        <linearGradient
+                            id="babyHairGrad"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                        >
+                            <stop offset="0" stop-color="#f6da7c" />
+                            <stop offset="1" stop-color="#e7bd4c" />
+                        </linearGradient>
+                        <radialGradient
+                            id="babyCheek"
+                            cx="0.5"
+                            cy="0.5"
+                            r="0.5"
+                        >
+                            <stop
+                                offset="0"
+                                stop-color="#f59a8a"
+                                stop-opacity="0.8"
+                            />
+                            <stop
+                                offset="1"
+                                stop-color="#f59a8a"
+                                stop-opacity="0"
+                            />
+                        </radialGradient>
+                    </defs>
 
-                    <!-- Legs -->
-                    <line
-                        x1="140"
-                        y1="290"
-                        x2="128"
-                        y2="348"
-                        stroke="var(--stork-leg)"
-                        stroke-width="5"
-                        stroke-linecap="round"
-                    />
-                    <line
-                        x1="160"
-                        y1="290"
-                        x2="172"
-                        y2="348"
-                        stroke="var(--stork-leg)"
-                        stroke-width="5"
-                        stroke-linecap="round"
-                    />
-                    <!-- Feet -->
-                    <path
-                        d="M128,348 L112,352 M128,348 L120,358 M128,348 L134,357"
-                        stroke="var(--stork-leg)"
-                        stroke-width="3.5"
-                        stroke-linecap="round"
-                        fill="none"
-                    />
-                    <path
-                        d="M172,348 L156,352 M172,348 L164,358 M172,348 L178,357"
-                        stroke="var(--stork-leg)"
-                        stroke-width="3.5"
-                        stroke-linecap="round"
-                        fill="none"
-                    />
-
-                    <!-- Body -->
-                    <ellipse
-                        cx="150"
-                        cy="220"
-                        rx="52"
-                        ry="68"
-                        fill="var(--stork-body)"
-                    />
-
-                    <!-- Left wing (back) -->
-                    <g class="stork-wing-left">
-                        <path
-                            d="M150,200 Q80,180 60,230 Q70,260 140,248 Z"
-                            fill="var(--stork-wing)"
-                            opacity="0.85"
-                        />
-                    </g>
-
-                    <!-- Right wing (front) -->
+                    <!-- ── BACK WING (far) ───────────────────────────── -->
                     <g class="stork-wing-right">
                         <path
-                            d="M150,200 Q220,180 240,230 Q230,260 160,248 Z"
-                            fill="var(--stork-body)"
+                            d="M158,182 C150,136 178,90 218,77 C244,69 258,88 252,116
+                               C248,138 228,152 208,160 C209,153 201,150 197,158
+                               C193,166 185,156 180,164 C175,171 168,162 162,170
+                               C159,175 158,179 158,182 Z"
+                            fill="url(#wingBackGrad)"
+                        />
+                        <path
+                            d="M172,168 C190,148 208,128 232,108"
+                            stroke="#d2e2f5"
+                            stroke-width="1.8"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity="0.45"
+                        />
+                        <path
+                            d="M184,170 C200,154 216,136 236,120"
+                            stroke="#d2e2f5"
+                            stroke-width="1.8"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity="0.4"
                         />
                     </g>
 
-                    <!-- Neck -->
+                    <!-- ── TAIL ──────────────────────────────────────── -->
                     <path
-                        d="M140,158 Q132,135 138,110 Q142,95 150,90"
-                        stroke="var(--stork-body)"
-                        stroke-width="22"
+                        d="M176,228 C204,232 230,240 248,250 C232,256 210,257 190,250
+                           C182,247 177,238 176,228 Z"
+                        fill="url(#wingBackGrad)"
+                    />
+                    <path
+                        d="M188,236 C208,240 226,246 242,252"
+                        stroke="#d2e2f5"
+                        stroke-width="1.4"
+                        fill="none"
+                        stroke-linecap="round"
+                        opacity="0.4"
+                    />
+
+                    <!-- ── LEGS ───────────────────────────────────────── -->
+                    <g
+                        stroke="var(--stork-leg)"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                        fill="none"
+                    >
+                        <path d="M150,250 C152,278 168,302 186,322" />
+                        <path d="M164,250 C168,280 186,305 204,326" />
+                    </g>
+                    <g
+                        stroke="var(--stork-leg)"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        fill="none"
+                    >
+                        <path d="M186,322 l15,1 M186,322 l12,9 M186,322 l3,13" />
+                        <path d="M204,326 l15,1 M204,326 l12,9 M204,326 l3,13" />
+                    </g>
+
+                    <!-- ── BODY ───────────────────────────────────────── -->
+                    <ellipse cx="153" cy="206" rx="50" ry="60" fill="url(#bodyGrad)" />
+                    <ellipse
+                        cx="137"
+                        cy="214"
+                        rx="25"
+                        ry="37"
+                        fill="#ffffff"
+                        opacity="0.5"
+                    />
+
+                    <!-- ── NECK ───────────────────────────────────────── -->
+                    <path
+                        d="M150,176 C138,150 118,142 106,132"
+                        stroke="#f4f8fd"
+                        stroke-width="25"
                         fill="none"
                         stroke-linecap="round"
                     />
-
-                    <!-- Black neck patch -->
                     <path
-                        d="M140,158 Q132,140 136,118"
-                        stroke="#222"
-                        stroke-width="12"
+                        d="M151,183 C141,161 125,151 113,141"
+                        stroke="#d9e3f0"
+                        stroke-width="8"
                         fill="none"
                         stroke-linecap="round"
-                        opacity="0.55"
-                    />
-
-                    <!-- Head -->
-                    <circle cx="155" cy="82" r="32" fill="var(--stork-body)" />
-
-                    <!-- Eye -->
-                    <circle cx="165" cy="76" r="6" fill="var(--stork-eye)" />
-                    <circle cx="167" cy="74" r="2" fill="white" />
-
-                    <!-- Beak -->
-                    <path
-                        d="M183,82 L218,77 L183,90 Z"
-                        fill="var(--stork-beak)"
-                    />
-
-                    <!-- Beak tip dot (holding rope) -->
-                    <circle
-                        cx="218"
-                        cy="77"
-                        r="4"
-                        fill="var(--stork-beak)"
                         opacity="0.6"
                     />
 
-                    <!-- Feather crown detail -->
+                    <!-- ── HEAD ───────────────────────────────────────── -->
+                    <circle cx="100" cy="118" r="28" fill="url(#headGrad)" />
+
+                    <!-- ── CREST (little head feathers, on top) ──────── -->
                     <path
-                        d="M140,58 Q148,42 155,50 Q158,38 162,48 Q168,34 168,50"
-                        stroke="var(--stork-wing)"
-                        stroke-width="2"
+                        d="M95,93 C96,82 104,83 103,93 C108,80 116,83 112,95
+                           C120,87 125,94 119,102"
+                        stroke="#c4d3e8"
+                        stroke-width="3.4"
                         fill="none"
                         stroke-linecap="round"
                     />
+
+                    <!-- ── BEAK ───────────────────────────────────────── -->
+                    <path
+                        d="M80,110 C62,116 40,134 28,148 C30,151 34,152 38,150
+                           C54,142 70,130 82,123 C84,117 83,111 80,110 Z"
+                        fill="url(#beakGrad)"
+                    />
+                    <path
+                        d="M38,150 C52,146 68,136 80,129 C82,132 82,136 80,139
+                           C68,145 52,152 40,155 C36,154 35,151 38,150 Z"
+                        fill="url(#beakLowerGrad)"
+                    />
+
+                    <!-- ── EYE + CHEEK ───────────────────────────────── -->
+                    <ellipse cx="78" cy="130" rx="9.5" ry="6.5" fill="url(#cheekGrad)" />
+                    <circle cx="88" cy="115" r="8.6" fill="#2b3a5f" />
+                    <circle cx="88" cy="115" r="5" fill="#3f74b6" />
+                    <circle cx="88" cy="115" r="2.4" fill="#11203c" />
+                    <circle cx="90.5" cy="112" r="2.5" fill="#ffffff" />
+                    <circle cx="85.5" cy="118.5" r="1.2" fill="#ffffff" opacity="0.85" />
+                    <path
+                        d="M80,108 C84,105 92,105 96,109"
+                        stroke="#2b3a5f"
+                        stroke-width="1.9"
+                        fill="none"
+                        stroke-linecap="round"
+                    />
+
+                    <!-- ── FRONT WING (near) ─────────────────────────── -->
+                    <g class="stork-wing-left">
+                        <path
+                            d="M150,186 C144,138 168,102 208,90 C244,79 268,98 263,126
+                               C259,150 240,168 216,180 C217,172 208,168 203,177
+                               C198,186 189,175 183,184 C178,192 169,181 163,189
+                               C159,194 152,190 150,186 Z"
+                            fill="url(#wingFrontGrad)"
+                        />
+                        <path
+                            d="M164,182 C184,160 204,138 232,114"
+                            stroke="#dceaf9"
+                            stroke-width="2"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity="0.5"
+                        />
+                        <path
+                            d="M178,184 C196,164 214,144 238,124"
+                            stroke="#dceaf9"
+                            stroke-width="2"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity="0.42"
+                        />
+                        <path
+                            d="M192,186 C208,168 224,150 246,134"
+                            stroke="#dceaf9"
+                            stroke-width="2"
+                            fill="none"
+                            stroke-linecap="round"
+                            opacity="0.36"
+                        />
+                    </g>
+
+                    <!-- ── BUNDLE (sling + baby) ─────────────────────── -->
+                    <g class="bundle-swing">
+                        <!-- tie from beak to bow -->
+                        <path
+                            id="bundle-top"
+                            d="M33,149 C36,157 41,164 46,170"
+                            stroke="#5ab4d6"
+                            stroke-width="3.2"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+
+                        <!-- gathered cloth under the bow -->
+                        <ellipse class="bundle" cx="49" cy="182" rx="11" ry="8" fill="#7ec8e3" />
+
+                        <!-- main pouch -->
+                        <path
+                            class="bundle"
+                            id="bundle"
+                            d="M49,184 C29,188 18,210 21,233 C24,255 41,268 60,266
+                               C80,264 93,248 91,225 C89,205 76,190 62,184
+                               C58,182 53,183 49,184 Z"
+                            fill="#7ec8e3"
+                        />
+
+                        <!-- pouch shading + highlight -->
+                        <path
+                            d="M91,225 C93,248 80,264 60,266 C74,260 82,246 81,227
+                               C80,209 71,194 60,187 C76,191 89,206 91,225 Z"
+                            fill="#0a2a4a"
+                            opacity="0.1"
+                        />
+                        <ellipse cx="34" cy="214" rx="9" ry="16" fill="#ffffff" opacity="0.22" />
+
+                        <!-- polka dots -->
+                        <g fill="#ffffff" opacity="0.9">
+                            <circle cx="40" cy="246" r="3.4" />
+                            <circle cx="58" cy="257" r="3.4" />
+                            <circle cx="74" cy="246" r="3.2" />
+                            <circle cx="50" cy="236" r="2.8" />
+                            <circle cx="66" cy="234" r="2.8" />
+                            <circle cx="81" cy="232" r="2.6" />
+                        </g>
+
+                        <!-- baby face -->
+                        <circle cx="52" cy="196" r="14" fill="#ffd8b0" />
+                        <!-- hair -->
+                        <path
+                            d="M39,193 C40,180 49,176 53,186 C57,177 66,180 65,191
+                               C60,187 56,188 52,190 C48,188 43,189 39,193 Z"
+                            fill="url(#babyHairGrad)"
+                        />
+                        <path
+                            d="M52,180 C52,173 60,173 58,180 C57,184 53,184 52,182"
+                            stroke="#e7bd4c"
+                            stroke-width="2.4"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+                        <!-- cheeks -->
+                        <ellipse cx="45" cy="201" rx="3" ry="2" fill="url(#babyCheek)" />
+                        <ellipse cx="59" cy="201" rx="3" ry="2" fill="url(#babyCheek)" />
+                        <!-- eyes + smile -->
+                        <circle cx="47" cy="196" r="1.7" fill="#3a2a1e" />
+                        <circle cx="57" cy="196" r="1.7" fill="#3a2a1e" />
+                        <path
+                            d="M48,203 C50,206 54,206 56,203"
+                            stroke="#c8704a"
+                            stroke-width="1.6"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+
+                        <!-- front blanket rim over baby -->
+                        <path
+                            class="bundle"
+                            d="M32,210 C42,222 62,222 72,210 C74,224 64,232 52,232
+                               C40,232 30,222 32,210 Z"
+                            fill="#7ec8e3"
+                        />
+                        <!-- little waving hand -->
+                        <circle cx="68" cy="206" r="4.5" fill="#ffd8b0" />
+
+                        <!-- BOW at the tie -->
+                        <path
+                            class="bundle-ribbon"
+                            d="M48,172 C37,162 28,165 31,173 C33,180 43,177 49,174 Z"
+                            fill="#c7e9f5"
+                        />
+                        <path
+                            class="bundle-ribbon"
+                            d="M50,172 C61,162 70,165 67,173 C65,180 55,177 49,174 Z"
+                            fill="#c7e9f5"
+                        />
+                        <path
+                            class="bundle-ribbon"
+                            d="M47,175 C44,183 42,189 41,194 L47,191 C48,186 48,180 49,176 Z"
+                            fill="#c7e9f5"
+                        />
+                        <path
+                            class="bundle-ribbon"
+                            d="M51,175 C54,183 56,189 57,194 L51,191 C50,186 50,180 49,176 Z"
+                            fill="#c7e9f5"
+                        />
+                        <circle id="bundle-knot" cx="49" cy="173" r="4.6" fill="#5ab4d6" />
+                    </g>
                 </svg>
             </div>
 
@@ -486,7 +733,7 @@
             <div class="headline-wrap">
                 <p class="eyebrow">✦ &nbsp; Hurra! &nbsp; ✦</p>
                 <h1 id="headline">
-                    Ein kleines<br /><em id="gender-word">Wunder</em><br />ist
+                    Ein kleines<br /><em id="headline-word">Wunder</em><br />ist
                     da!
                 </h1>
             </div>
@@ -509,7 +756,8 @@
             /* ════════════════════════════════════════════════════════════
              *  CONFIG  –  hier anpassen!
              * ════════════════════════════════════════════════════════════ */
-            const BABY_GIRL = null; // true = Mädchen, false = Bub
+            const BABY_GIRL = true; // true = Mädchen (rosa), false = Bub (blau)
+            const HEADLINE_WORD = "Wunder"; // Wort in der Überschrift: „Ein kleines ___ ist da!"
             const BABY_NAME = "Baby Name"; // z.B. "Lena" oder "Elias"
             const BIRTH_DATE = "10. Juli 2025 · 03:42 Uhr";
             const FOOTER_NOTE = "Herzlich willkommen auf der Welt 🌙";
@@ -523,7 +771,7 @@
                       bundle: "#f4a0c0",
                       bundleTop: "#e8789e",
                       knot: "#e8789e",
-                      word: "Mädchen",
+                      ribbon: "#ffd4e6",
                   }
                 : {
                       accent: "#7ec8e3",
@@ -531,7 +779,7 @@
                       bundle: "#7ec8e3",
                       bundleTop: "#5ab4d6",
                       knot: "#5ab4d6",
-                      word: "Bub",
+                      ribbon: "#c7e9f5",
                   };
 
             // CSS-Variablen setzen
@@ -544,6 +792,9 @@
                 .querySelectorAll(".bundle")
                 .forEach((el) => el.setAttribute("fill", theme.bundle));
             document
+                .querySelectorAll(".bundle-ribbon")
+                .forEach((el) => el.setAttribute("fill", theme.ribbon));
+            document
                 .getElementById("bundle-top")
                 .setAttribute("stroke", theme.bundleTop);
             document
@@ -551,7 +802,7 @@
                 .setAttribute("fill", theme.knot);
 
             // Texte
-            document.getElementById("gender-word").textContent = theme.word;
+            document.getElementById("headline-word").textContent = HEADLINE_WORD;
             document.getElementById("baby-name").textContent = BABY_NAME;
             document.getElementById("birth-date").textContent = BIRTH_DATE;
             document.getElementById("footer-note").textContent = FOOTER_NOTE;
