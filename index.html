@@ -1,370 +1,568 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ein Baby ist da! 🐣</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    /* ── CONFIG ─────────────────────────────────────────────── */
-    /* Change BABY_GIRL in the <script> below to switch theme   */
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ein Baby ist da! 🐣</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            /* ── CONFIG ─────────────────────────────────────────────── */
+            /* Change BABY_GIRL in the <script> below to switch theme   */
 
-    :root {
-      --bg:        #0d1117;
-      --sky-top:   #0a0f2e;
-      --sky-mid:   #1a2a5e;
-      --sky-low:   #2d4a8a;
-      --moon:      #f5c842;
-      --star:      rgba(255,255,255,0.85);
-      --text:      #f0ece2;
-      --text-sub:  rgba(240,236,226,0.6);
-      /* accent colours set by JS */
-      --accent:    #7ec8e3;
-      --accent2:   #5ab4d6;
-      --stork-body:#ffffff;
-      --stork-wing:#e8e8e8;
-      --stork-beak:#e8742a;
-      --stork-leg: #e8742a;
-      --stork-eye: #1a1a2e;
-    }
+            :root {
+                --bg: #0d1117;
+                --sky-top: #0a0f2e;
+                --sky-mid: #1a2a5e;
+                --sky-low: #2d4a8a;
+                --moon: #f5c842;
+                --star: rgba(255, 255, 255, 0.85);
+                --text: #f0ece2;
+                --text-sub: rgba(240, 236, 226, 0.6);
+                /* accent colours set by JS */
+                --accent: #7ec8e3;
+                --accent2: #5ab4d6;
+                --stork-body: #ffffff;
+                --stork-wing: #e8e8e8;
+                --stork-beak: #e8742a;
+                --stork-leg: #e8742a;
+                --stork-eye: #1a1a2e;
+            }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: "Inter", sans-serif;
+                min-height: 100vh;
+                overflow-x: hidden;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-    /* ── SKY GRADIENT ───────────────────────────────────────── */
-    .sky {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        var(--sky-top) 0%,
-        var(--sky-mid) 55%,
-        var(--sky-low) 100%
-      );
-      z-index: 0;
-    }
+            /* ── SKY GRADIENT ───────────────────────────────────────── */
+            .sky {
+                position: fixed;
+                inset: 0;
+                background: linear-gradient(
+                    180deg,
+                    var(--sky-top) 0%,
+                    var(--sky-mid) 55%,
+                    var(--sky-low) 100%
+                );
+                z-index: 0;
+            }
 
-    /* ── STARS ──────────────────────────────────────────────── */
-    .stars {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .star {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--star);
-      animation: twinkle var(--dur, 3s) ease-in-out infinite;
-      animation-delay: var(--del, 0s);
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50%       { opacity: 1;   transform: scale(1.3); }
-    }
+            /* ── STARS ──────────────────────────────────────────────── */
+            .stars {
+                position: fixed;
+                inset: 0;
+                z-index: 1;
+                pointer-events: none;
+            }
+            .star {
+                position: absolute;
+                border-radius: 50%;
+                background: var(--star);
+                animation: twinkle var(--dur, 3s) ease-in-out infinite;
+                animation-delay: var(--del, 0s);
+            }
+            @keyframes twinkle {
+                0%,
+                100% {
+                    opacity: 0.2;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.3);
+                }
+            }
 
-    /* ── MOON ───────────────────────────────────────────────── */
-    .moon {
-      position: fixed;
-      top: 6vh;
-      right: 10vw;
-      width: clamp(60px, 10vw, 110px);
-      height: clamp(60px, 10vw, 110px);
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffe97a, var(--moon) 60%, #c8960a);
-      box-shadow: 0 0 40px 15px rgba(245,200,66,0.25), 0 0 80px 30px rgba(245,200,66,0.1);
-      z-index: 2;
-      animation: moonGlow 4s ease-in-out infinite;
-    }
-    @keyframes moonGlow {
-      0%, 100% { box-shadow: 0 0 40px 15px rgba(245,200,66,0.25), 0 0 80px 30px rgba(245,200,66,0.10); }
-      50%       { box-shadow: 0 0 55px 20px rgba(245,200,66,0.40), 0 0 100px 40px rgba(245,200,66,0.15); }
-    }
+            /* ── MOON ───────────────────────────────────────────────── */
+            .moon {
+                position: fixed;
+                top: 6vh;
+                right: 10vw;
+                width: clamp(60px, 10vw, 110px);
+                height: clamp(60px, 10vw, 110px);
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle at 35% 35%,
+                    #ffe97a,
+                    var(--moon) 60%,
+                    #c8960a
+                );
+                box-shadow:
+                    0 0 40px 15px rgba(245, 200, 66, 0.25),
+                    0 0 80px 30px rgba(245, 200, 66, 0.1);
+                z-index: 2;
+                animation: moonGlow 4s ease-in-out infinite;
+            }
+            @keyframes moonGlow {
+                0%,
+                100% {
+                    box-shadow:
+                        0 0 40px 15px rgba(245, 200, 66, 0.25),
+                        0 0 80px 30px rgba(245, 200, 66, 0.1);
+                }
+                50% {
+                    box-shadow:
+                        0 0 55px 20px rgba(245, 200, 66, 0.4),
+                        0 0 100px 40px rgba(245, 200, 66, 0.15);
+                }
+            }
 
-    /* ── MAIN CONTENT ───────────────────────────────────────── */
-    .content {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 480px;
-      padding: 2rem 1.5rem 4rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
+            /* ── MAIN CONTENT ───────────────────────────────────────── */
+            .content {
+                position: relative;
+                z-index: 10;
+                width: 100%;
+                max-width: 480px;
+                padding: 2rem 1.5rem 4rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
 
-    /* ── STORK WRAPPER ──────────────────────────────────────── */
-    .stork-wrap {
-      margin-top: 3rem;
-      width: clamp(220px, 60vw, 320px);
-      animation: storkLand 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      transform-origin: center bottom;
-    }
-    @keyframes storkLand {
-      0%   { transform: translateY(-120px) rotate(-8deg); opacity: 0; }
-      60%  { transform: translateY(12px)   rotate(2deg);  opacity: 1; }
-      80%  { transform: translateY(-6px)   rotate(-1deg); }
-      100% { transform: translateY(0)      rotate(0deg);  opacity: 1; }
-    }
+            /* ── STORK WRAPPER ──────────────────────────────────────── */
+            .stork-wrap {
+                margin-top: 3rem;
+                width: clamp(220px, 60vw, 320px);
+                animation: storkLand 1.4s cubic-bezier(0.22, 1, 0.36, 1)
+                    forwards;
+                transform-origin: center bottom;
+            }
+            @keyframes storkLand {
+                0% {
+                    transform: translateY(-120px) rotate(-8deg);
+                    opacity: 0;
+                }
+                60% {
+                    transform: translateY(12px) rotate(2deg);
+                    opacity: 1;
+                }
+                80% {
+                    transform: translateY(-6px) rotate(-1deg);
+                }
+                100% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+            }
 
-    /* Wing flap on load */
-    .stork-wing-left,
-    .stork-wing-right {
-      transform-origin: center right;
-      animation: wingFlap 0.5s ease-in-out 1.3s 3 alternate;
-    }
-    .stork-wing-right {
-      transform-origin: center left;
-    }
-    @keyframes wingFlap {
-      0%   { transform: rotate(0deg); }
-      100% { transform: rotate(-12deg); }
-    }
+            /* Wing flap on load */
+            .stork-wing-left,
+            .stork-wing-right {
+                transform-origin: center right;
+                animation: wingFlap 0.5s ease-in-out 1.3s 3 alternate;
+            }
+            .stork-wing-right {
+                transform-origin: center left;
+            }
+            @keyframes wingFlap {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(-12deg);
+                }
+            }
 
-    /* gentle hover bob after landing */
-    .stork-wrap svg {
-      animation: bob 4s ease-in-out 2s infinite;
-    }
-    @keyframes bob {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
+            /* gentle hover bob after landing */
+            .stork-wrap svg {
+                animation: bob 4s ease-in-out 2s infinite;
+            }
+            @keyframes bob {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
 
-    /* ── BUNDLE BAG ─────────────────────────────────────────── */
-    .bundle {
-      transition: fill 0.8s ease;
-    }
+            /* ── BUNDLE BAG ─────────────────────────────────────────── */
+            .bundle {
+                transition: fill 0.8s ease;
+            }
 
-    /* ── HEADLINE ───────────────────────────────────────────── */
-    .headline-wrap {
-      margin-top: 2.5rem;
-      text-align: center;
-      animation: fadeUp 0.9s ease 1.6s both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 300;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--text-sub);
-      margin-bottom: 0.6rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 8vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--text);
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
+            /* ── HEADLINE ───────────────────────────────────────────── */
+            .headline-wrap {
+                margin-top: 2.5rem;
+                text-align: center;
+                animation: fadeUp 0.9s ease 1.6s both;
+            }
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .eyebrow {
+                font-family: "Inter", sans-serif;
+                font-size: 0.7rem;
+                font-weight: 300;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                color: var(--text-sub);
+                margin-bottom: 0.6rem;
+            }
+            h1 {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(2.2rem, 8vw, 3.2rem);
+                font-weight: 700;
+                line-height: 1.1;
+                color: var(--text);
+            }
+            h1 em {
+                font-style: italic;
+                color: var(--accent);
+            }
 
-    /* ── META (name / date) ─────────────────────────────────── */
-    .meta {
-      margin-top: 1.8rem;
-      text-align: center;
-      animation: fadeUp 0.9s ease 2s both;
-    }
-    .baby-name {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 6vw, 2.4rem);
-      font-weight: 400;
-      color: var(--accent);
-      letter-spacing: 0.04em;
-    }
-    .birth-date {
-      margin-top: 0.4rem;
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--text-sub);
-      letter-spacing: 0.08em;
-    }
+            /* ── META (name / date) ─────────────────────────────────── */
+            .meta {
+                margin-top: 1.8rem;
+                text-align: center;
+                animation: fadeUp 0.9s ease 2s both;
+            }
+            .baby-name {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(1.6rem, 6vw, 2.4rem);
+                font-weight: 400;
+                color: var(--accent);
+                letter-spacing: 0.04em;
+            }
+            .birth-date {
+                margin-top: 0.4rem;
+                font-size: 0.85rem;
+                font-weight: 300;
+                color: var(--text-sub);
+                letter-spacing: 0.08em;
+            }
 
-    /* ── DIVIDER ────────────────────────────────────────────── */
-    .divider {
-      margin: 2.2rem auto;
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.4;
-      animation: fadeUp 0.9s ease 2.2s both;
-    }
+            /* ── DIVIDER ────────────────────────────────────────────── */
+            .divider {
+                margin: 2.2rem auto;
+                width: 40px;
+                height: 1px;
+                background: var(--accent);
+                opacity: 0.4;
+                animation: fadeUp 0.9s ease 2.2s both;
+            }
 
-    /* ── FOOTER NOTE ────────────────────────────────────────── */
-    .note {
-      text-align: center;
-      font-size: 0.8rem;
-      font-weight: 300;
-      color: var(--text-sub);
-      line-height: 1.6;
-      animation: fadeUp 0.9s ease 2.4s both;
-    }
+            /* ── FOOTER NOTE ────────────────────────────────────────── */
+            .note {
+                text-align: center;
+                font-size: 0.8rem;
+                font-weight: 300;
+                color: var(--text-sub);
+                line-height: 1.6;
+                animation: fadeUp 0.9s ease 2.4s both;
+            }
 
-    /* ── CLOUD DECO ─────────────────────────────────────────── */
-    .clouds {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      z-index: 3;
-      pointer-events: none;
-    }
+            /* ── CLOUD DECO ─────────────────────────────────────────── */
+            .clouds {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 3;
+                pointer-events: none;
+            }
 
-    /* ── REDUCED MOTION ─────────────────────────────────────── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; }
-      .stork-wrap { opacity: 1; transform: none; }
-    }
-  </style>
-</head>
-<body>
+            /* ── REDUCED MOTION ─────────────────────────────────────── */
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation: none !important;
+                }
+                .stork-wrap {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sky"></div>
+        <div class="stars" id="stars"></div>
+        <div class="moon"></div>
 
-<div class="sky"></div>
-<div class="stars" id="stars"></div>
-<div class="moon"></div>
+        <!-- Subtle cloud silhouette at bottom -->
+        <svg
+            class="clouds"
+            viewBox="0 0 1440 120"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+        >
+            <path
+                d="M0,80 Q180,30 360,75 Q540,120 720,60 Q900,0 1080,70 Q1260,130 1440,65 L1440,120 L0,120 Z"
+                fill="rgba(29,58,120,0.5)"
+            />
+            <path
+                d="M0,100 Q200,60 400,95 Q600,130 800,80 Q1000,30 1200,90 Q1350,130 1440,95 L1440,120 L0,120 Z"
+                fill="rgba(13,17,23,0.7)"
+            />
+        </svg>
 
-<!-- Subtle cloud silhouette at bottom -->
-<svg class="clouds" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-  <path d="M0,80 Q180,30 360,75 Q540,120 720,60 Q900,0 1080,70 Q1260,130 1440,65 L1440,120 L0,120 Z"
-        fill="rgba(29,58,120,0.5)"/>
-  <path d="M0,100 Q200,60 400,95 Q600,130 800,80 Q1000,30 1200,90 Q1350,130 1440,95 L1440,120 L0,120 Z"
-        fill="rgba(13,17,23,0.7)"/>
-</svg>
+        <main class="content">
+            <!-- STORK SVG ─────────────────────────────────────────────── -->
+            <div class="stork-wrap">
+                <svg
+                    id="stork-svg"
+                    viewBox="0 0 300 380"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Storch mit Baby"
+                >
+                    <!-- Bundle (cloth sack the stork carries) -->
+                    <ellipse
+                        class="bundle"
+                        id="bundle"
+                        cx="150"
+                        cy="310"
+                        rx="52"
+                        ry="42"
+                        fill="#7ec8e3"
+                    />
+                    <path
+                        class="bundle"
+                        id="bundle-top"
+                        d="M98,310 Q150,260 202,310"
+                        stroke="#5ab4d6"
+                        stroke-width="2"
+                        fill="none"
+                    />
+                    <!-- Knot on bundle -->
+                    <circle
+                        id="bundle-knot"
+                        cx="150"
+                        cy="268"
+                        r="7"
+                        fill="#5ab4d6"
+                    />
+                    <!-- Rope from beak to bundle -->
+                    <path
+                        id="rope"
+                        d="M178,155 Q185,210 150,263"
+                        stroke="#c8a06a"
+                        stroke-width="2.5"
+                        fill="none"
+                        stroke-linecap="round"
+                    />
 
-<main class="content">
+                    <!-- Legs -->
+                    <line
+                        x1="140"
+                        y1="290"
+                        x2="128"
+                        y2="348"
+                        stroke="var(--stork-leg)"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                    />
+                    <line
+                        x1="160"
+                        y1="290"
+                        x2="172"
+                        y2="348"
+                        stroke="var(--stork-leg)"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                    />
+                    <!-- Feet -->
+                    <path
+                        d="M128,348 L112,352 M128,348 L120,358 M128,348 L134,357"
+                        stroke="var(--stork-leg)"
+                        stroke-width="3.5"
+                        stroke-linecap="round"
+                        fill="none"
+                    />
+                    <path
+                        d="M172,348 L156,352 M172,348 L164,358 M172,348 L178,357"
+                        stroke="var(--stork-leg)"
+                        stroke-width="3.5"
+                        stroke-linecap="round"
+                        fill="none"
+                    />
 
-  <!-- STORK SVG ─────────────────────────────────────────────── -->
-  <div class="stork-wrap">
-    <svg id="stork-svg" viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" aria-label="Storch mit Baby">
+                    <!-- Body -->
+                    <ellipse
+                        cx="150"
+                        cy="220"
+                        rx="52"
+                        ry="68"
+                        fill="var(--stork-body)"
+                    />
 
-      <!-- Bundle (cloth sack the stork carries) -->
-      <ellipse class="bundle" id="bundle" cx="150" cy="310" rx="52" ry="42" fill="#7ec8e3"/>
-      <path class="bundle" id="bundle-top" d="M98,310 Q150,260 202,310" stroke="#5ab4d6" stroke-width="2" fill="none"/>
-      <!-- Knot on bundle -->
-      <circle id="bundle-knot" cx="150" cy="268" r="7" fill="#5ab4d6"/>
-      <!-- Rope from beak to bundle -->
-      <path id="rope" d="M178,155 Q185,210 150,263" stroke="#c8a06a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Left wing (back) -->
+                    <g class="stork-wing-left">
+                        <path
+                            d="M150,200 Q80,180 60,230 Q70,260 140,248 Z"
+                            fill="var(--stork-wing)"
+                            opacity="0.85"
+                        />
+                    </g>
 
-      <!-- Legs -->
-      <line x1="140" y1="290" x2="128" y2="348" stroke="var(--stork-leg)" stroke-width="5" stroke-linecap="round"/>
-      <line x1="160" y1="290" x2="172" y2="348" stroke="var(--stork-leg)" stroke-width="5" stroke-linecap="round"/>
-      <!-- Feet -->
-      <path d="M128,348 L112,352 M128,348 L120,358 M128,348 L134,357" stroke="var(--stork-leg)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-      <path d="M172,348 L156,352 M172,348 L164,358 M172,348 L178,357" stroke="var(--stork-leg)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <!-- Right wing (front) -->
+                    <g class="stork-wing-right">
+                        <path
+                            d="M150,200 Q220,180 240,230 Q230,260 160,248 Z"
+                            fill="var(--stork-body)"
+                        />
+                    </g>
 
-      <!-- Body -->
-      <ellipse cx="150" cy="220" rx="52" ry="68" fill="var(--stork-body)"/>
+                    <!-- Neck -->
+                    <path
+                        d="M140,158 Q132,135 138,110 Q142,95 150,90"
+                        stroke="var(--stork-body)"
+                        stroke-width="22"
+                        fill="none"
+                        stroke-linecap="round"
+                    />
 
-      <!-- Left wing (back) -->
-      <g class="stork-wing-left">
-        <path d="M150,200 Q80,180 60,230 Q70,260 140,248 Z" fill="var(--stork-wing)" opacity="0.85"/>
-      </g>
+                    <!-- Black neck patch -->
+                    <path
+                        d="M140,158 Q132,140 136,118"
+                        stroke="#222"
+                        stroke-width="12"
+                        fill="none"
+                        stroke-linecap="round"
+                        opacity="0.55"
+                    />
 
-      <!-- Right wing (front) -->
-      <g class="stork-wing-right">
-        <path d="M150,200 Q220,180 240,230 Q230,260 160,248 Z" fill="var(--stork-body)"/>
-      </g>
+                    <!-- Head -->
+                    <circle cx="155" cy="82" r="32" fill="var(--stork-body)" />
 
-      <!-- Neck -->
-      <path d="M140,158 Q132,135 138,110 Q142,95 150,90" stroke="var(--stork-body)" stroke-width="22" fill="none" stroke-linecap="round"/>
+                    <!-- Eye -->
+                    <circle cx="165" cy="76" r="6" fill="var(--stork-eye)" />
+                    <circle cx="167" cy="74" r="2" fill="white" />
 
-      <!-- Black neck patch -->
-      <path d="M140,158 Q132,140 136,118" stroke="#222" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.55"/>
+                    <!-- Beak -->
+                    <path
+                        d="M183,82 L218,77 L183,90 Z"
+                        fill="var(--stork-beak)"
+                    />
 
-      <!-- Head -->
-      <circle cx="155" cy="82" r="32" fill="var(--stork-body)"/>
+                    <!-- Beak tip dot (holding rope) -->
+                    <circle
+                        cx="218"
+                        cy="77"
+                        r="4"
+                        fill="var(--stork-beak)"
+                        opacity="0.6"
+                    />
 
-      <!-- Eye -->
-      <circle cx="165" cy="76" r="6" fill="var(--stork-eye)"/>
-      <circle cx="167" cy="74" r="2" fill="white"/>
+                    <!-- Feather crown detail -->
+                    <path
+                        d="M140,58 Q148,42 155,50 Q158,38 162,48 Q168,34 168,50"
+                        stroke="var(--stork-wing)"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </div>
 
-      <!-- Beak -->
-      <path d="M183,82 L218,77 L183,90 Z" fill="var(--stork-beak)"/>
+            <!-- TEXT ──────────────────────────────────────────────────── -->
+            <div class="headline-wrap">
+                <p class="eyebrow">✦ &nbsp; Hurra! &nbsp; ✦</p>
+                <h1 id="headline">
+                    Ein kleines<br /><em id="gender-word">Wunder</em><br />ist
+                    da!
+                </h1>
+            </div>
 
-      <!-- Beak tip dot (holding rope) -->
-      <circle cx="218" cy="77" r="4" fill="var(--stork-beak)" opacity="0.6"/>
+            <div class="meta">
+                <div class="baby-name" id="baby-name">Baby Name</div>
+                <div class="birth-date" id="birth-date">
+                    Geburtsdatum · Uhrzeit
+                </div>
+            </div>
 
-      <!-- Feather crown detail -->
-      <path d="M140,58 Q148,42 155,50 Q158,38 162,48 Q168,34 168,50" stroke="var(--stork-wing)" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </svg>
-  </div>
+            <div class="divider"></div>
 
-  <!-- TEXT ──────────────────────────────────────────────────── -->
-  <div class="headline-wrap">
-    <p class="eyebrow">✦ &nbsp; Es ist soweit &nbsp; ✦</p>
-    <h1 id="headline">Ein kleines<br/><em id="gender-word">Wunder</em><br/>ist da!</h1>
-  </div>
+            <p class="note" id="footer-note">
+                Herzlich willkommen auf der Welt 🌙
+            </p>
+        </main>
 
-  <div class="meta">
-    <div class="baby-name" id="baby-name">Baby Name</div>
-    <div class="birth-date" id="birth-date">Geburtsdatum · Uhrzeit</div>
-  </div>
+        <script>
+            /* ════════════════════════════════════════════════════════════
+             *  CONFIG  –  hier anpassen!
+             * ════════════════════════════════════════════════════════════ */
+            const BABY_GIRL = null; // true = Mädchen, false = Bub
+            const BABY_NAME = "Baby Name"; // z.B. "Lena" oder "Elias"
+            const BIRTH_DATE = "10. Juli 2025 · 03:42 Uhr";
+            const FOOTER_NOTE = "Herzlich willkommen auf der Welt 🌙";
+            /* ════════════════════════════════════════════════════════════ */
 
-  <div class="divider"></div>
+            // ── Theme-Farben ───────────────────────────────────────────
+            const theme = BABY_GIRL
+                ? {
+                      accent: "#f4a0c0",
+                      accent2: "#e8789e",
+                      bundle: "#f4a0c0",
+                      bundleTop: "#e8789e",
+                      knot: "#e8789e",
+                      word: "Mädchen",
+                  }
+                : {
+                      accent: "#7ec8e3",
+                      accent2: "#5ab4d6",
+                      bundle: "#7ec8e3",
+                      bundleTop: "#5ab4d6",
+                      knot: "#5ab4d6",
+                      word: "Bub",
+                  };
 
-  <p class="note" id="footer-note">
-    Herzlich willkommen auf der Welt 🌙
-  </p>
+            // CSS-Variablen setzen
+            const root = document.documentElement;
+            root.style.setProperty("--accent", theme.accent);
+            root.style.setProperty("--accent2", theme.accent2);
 
-</main>
+            // Bundle-Farben im SVG
+            document
+                .querySelectorAll(".bundle")
+                .forEach((el) => el.setAttribute("fill", theme.bundle));
+            document
+                .getElementById("bundle-top")
+                .setAttribute("stroke", theme.bundleTop);
+            document
+                .getElementById("bundle-knot")
+                .setAttribute("fill", theme.knot);
 
-<script>
-  /* ════════════════════════════════════════════════════════════
-   *  CONFIG  –  hier anpassen!
-   * ════════════════════════════════════════════════════════════ */
-  const BABY_GIRL   = false;            // true = Mädchen, false = Bub
-  const BABY_NAME   = "Baby Name";      // z.B. "Lena" oder "Elias"
-  const BIRTH_DATE  = "01. Januar 2025 · 03:42 Uhr";
-  const FOOTER_NOTE = "Herzlich willkommen auf der Welt 🌙";
-  /* ════════════════════════════════════════════════════════════ */
+            // Texte
+            document.getElementById("gender-word").textContent = theme.word;
+            document.getElementById("baby-name").textContent = BABY_NAME;
+            document.getElementById("birth-date").textContent = BIRTH_DATE;
+            document.getElementById("footer-note").textContent = FOOTER_NOTE;
 
-  // ── Theme-Farben ───────────────────────────────────────────
-  const theme = BABY_GIRL
-    ? { accent: "#f4a0c0", accent2: "#e8789e", bundle: "#f4a0c0", bundleTop: "#e8789e", knot: "#e8789e", word: "Mädchen" }
-    : { accent: "#7ec8e3", accent2: "#5ab4d6", bundle: "#7ec8e3", bundleTop: "#5ab4d6", knot: "#5ab4d6", word: "Bub" };
-
-  // CSS-Variablen setzen
-  const root = document.documentElement;
-  root.style.setProperty("--accent",  theme.accent);
-  root.style.setProperty("--accent2", theme.accent2);
-
-  // Bundle-Farben im SVG
-  document.querySelectorAll(".bundle").forEach(el => el.setAttribute("fill", theme.bundle));
-  document.getElementById("bundle-top").setAttribute("stroke", theme.bundleTop);
-  document.getElementById("bundle-knot").setAttribute("fill", theme.knot);
-
-  // Texte
-  document.getElementById("gender-word").textContent = theme.word;
-  document.getElementById("baby-name").textContent   = BABY_NAME;
-  document.getElementById("birth-date").textContent  = BIRTH_DATE;
-  document.getElementById("footer-note").textContent = FOOTER_NOTE;
-
-  // ── Sterne generieren ──────────────────────────────────────
-  const starsEl = document.getElementById("stars");
-  for (let i = 0; i < 80; i++) {
-    const s = document.createElement("div");
-    s.className = "star";
-    const size = Math.random() * 2.5 + 0.8;
-    s.style.cssText = `
+            // ── Sterne generieren ──────────────────────────────────────
+            const starsEl = document.getElementById("stars");
+            for (let i = 0; i < 80; i++) {
+                const s = document.createElement("div");
+                s.className = "star";
+                const size = Math.random() * 2.5 + 0.8;
+                s.style.cssText = `
       width:  ${size}px;
       height: ${size}px;
       top:    ${Math.random() * 75}%;
@@ -372,8 +570,8 @@
       --dur:  ${(Math.random() * 3 + 2).toFixed(1)}s;
       --del:  ${(Math.random() * 4).toFixed(1)}s;
     `;
-    starsEl.appendChild(s);
-  }
-</script>
-</body>
+                starsEl.appendChild(s);
+            }
+        </script>
+    </body>
 </html>
