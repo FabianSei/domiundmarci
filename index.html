@@ -475,22 +475,20 @@
                         stroke-linecap="round"
                     />
 
-                    <!-- ── BEAK ───────────────────────────────────────── -->
-                    <!-- mouth interior, so the slightly open beak is not see-through -->
+                    <!-- ── BEAK (closed, no see-through gap) ─────────── -->
                     <path
-                        d="M40,149 C56,143 72,132 83,123 C85,128 85,134 83,139
-                           C72,144 56,150 42,153 C39,152 38,150 40,149 Z"
-                        fill="#9a4a17"
-                    />
-                    <path
-                        d="M80,108 C62,114 40,132 28,146 C30,149 34,150 38,148
-                           C54,140 70,128 82,121 C84,115 83,109 80,108 Z"
+                        d="M81,109 C62,114 40,132 28,146 C27,148 27,150 29,151
+                           C44,146 64,138 80,132 C84,126 85,116 81,109 Z"
                         fill="url(#beakGrad)"
                     />
+                    <!-- mouth crease (mandible split, just a line) -->
                     <path
-                        d="M38,148 C52,144 68,134 80,127 C82,130 82,134 80,137
-                           C68,143 52,150 40,153 C36,152 35,149 38,148 Z"
-                        fill="url(#beakLowerGrad)"
+                        d="M31,150 C49,145 67,137 80,131"
+                        stroke="#9a4a17"
+                        stroke-width="1.7"
+                        fill="none"
+                        stroke-linecap="round"
+                        opacity="0.7"
                     />
 
                     <!-- ── CHEEK + EYE (bright & joyful) ─────────────── -->
@@ -508,32 +506,37 @@
                     <circle cx="86" cy="113" r="9.3" fill="#2b3a5f" />
                     <circle cx="85.5" cy="114" r="7.5" fill="url(#irisGrad)" />
                     <circle cx="84" cy="115.5" r="3.4" fill="#13223e" />
-                    <circle cx="88" cy="109.5" r="3" fill="#ffffff" />
-                    <circle cx="81.6" cy="117" r="1.5" fill="#ffffff" opacity="0.85" />
+                    <circle cx="88" cy="109.5" r="3.4" fill="#ffffff" />
+                    <circle cx="81.6" cy="117" r="1.6" fill="#ffffff" opacity="0.9" />
                     <!-- upper lid -->
                     <path
-                        d="M75,107 C80,101.5 91,101.5 96,108"
+                        d="M76,106.5 C81,101.5 91,102 96,107.5"
                         stroke="#2b3a5f"
-                        stroke-width="2.3"
+                        stroke-width="1.9"
                         fill="none"
                         stroke-linecap="round"
                     />
-                    <!-- lashes -->
+                    <!-- delicate eyelashes (no separate brow) -->
                     <path
-                        d="M75.5,107 l-4,-1.5 M77.5,104.5 l-3.2,-2.6 M80.5,102.6 l-1.8,-3.2"
+                        d="M76.5,106 C74,103.5 72.5,102 71,100"
                         stroke="#2b3a5f"
-                        stroke-width="1.7"
+                        stroke-width="1.5"
                         fill="none"
                         stroke-linecap="round"
                     />
-                    <!-- raised, delighted brow -->
                     <path
-                        d="M78,96 C84,92.5 92,93 97,97"
+                        d="M79,104 C77.5,101.5 76.5,100 75.5,98.5"
                         stroke="#2b3a5f"
-                        stroke-width="2"
+                        stroke-width="1.5"
                         fill="none"
                         stroke-linecap="round"
-                        opacity="0.85"
+                    />
+                    <path
+                        d="M82,103 C81.2,100.5 80.8,99.2 80.3,97.8"
+                        stroke="#2b3a5f"
+                        stroke-width="1.5"
+                        fill="none"
+                        stroke-linecap="round"
                     />
 
                     <!-- ── NEAR WING (big layered feathers, in front) ── -->
